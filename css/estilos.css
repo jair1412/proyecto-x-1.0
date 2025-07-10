@@ -566,16 +566,16 @@ nav ul li a {
 
 @media (max-width: 600px) {
   .titulo {
-    font-size: 3em !important;  /* Más grande el título */
+    font-size: 3em !important;
   }
 
   nav ul li a {
-    font-size: 1.3em !important;  /* Links del menú más grandes */
+    font-size: 1.3em !important;
     padding: 15px 0 !important;
   }
 
   .contacto form {
-    max-width: 100% !important;  /* Que ocupe todo el ancho disponible */
+    max-width: 100% !important;
     padding: 0 10px !important;
   }
 
