@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Proyectos X - Página Demo</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header>
+    <h1 class="titulo">Proyecto X</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#">Inicio</a></li>
+      <li><a href="proyectos.html">Proyectos</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+
+    </ul>
+  </nav>
+
+  <main>
+    <h2 class="texto-centrado">Juega</h2>
+    <p class="texto-centrado">Celular Xiaomi Redmi note 11</p>
+
+    <img src="img/celular1.jpg" alt="celular 1" class="imagen-inicio">
+
+    <h2 class="texto-centrado2">¡CANTIDADES LIMITADAS!</h2>
+    <p class="texto-centrado3">¡Números Vendidos!</p>
+    <div class="barra-contenedor">
+  <div class="barra-progreso" data-valor="70">0.00%</div>
+</div>
+<p class="texto-centrado4">El dispositivo se jugará una vez vendida la totalidad de números, es decir, cuando la barra de progreso llegue al 100%.</p>
+<p class="texto-centrado4">Se hará tomando los 3 primeros dígitos de la suertuda nacional (programa de la lotería nacional).</p>
+  </main>
+  
+  <section class="como-participar">
+  <h3>¿Cómo participar?</h3>
+  <ol>
+    <li>Selecciona el combo de números que desees.</li>
+    <li>Serás redirigido a una página donde seleccionarás tu método de pago.</li>
+    <li>Una vez realizado el pago, automáticamente y de forma aleatoria se asignarán tus números.</li>
+    <li>Revisa el correo electrónico registrado en la pestaña de pago, allí estarán tus números.</li>
+  </ol>
+</section>
+
+  <h3 class="texto-centrado3">¡Adquiere tus números!</h3>
+  <p class="texto-centrado3">Valor por unidad $1</p>
+
+<!-- Primera fila: 3 combos -->
+<div class="fila-combos fila-1">
+  <div class="combo-card">
+    <h4>x3 números</h4>
+    <p>$3 (a $1 c/u)</p>
+    <a href="pago.html?combo=3" class="btn-comprar">Comprar</a>
+  </div>
+  <div class="combo-card">
+    <h4>x5 números</h4>
+    <p>$5 (a $1 c/u)</p>
+    <a href="pago.html?combo=5" class="btn-comprar">Comprar</a>
+  </div>
+  <div class="combo-card">
+    <h4>x10 números</h4>
+    <p>$10 (a $1 c/u)</p>
+    <a href="pago.html?combo=10" class="btn-comprar">Comprar</a>
+  </div>
+</div>
+
+<!-- Segunda fila: 2 combos centrados -->
+<div class="fila-combos fila-2">
+  <div class="combo-card">
+    <h4>x15 números</h4>
+    <p>$15 (a $1 c/u)</p>
+    <a href="pago.html?combo=15" class="btn-comprar">Comprar</a>
+  </div>
+  <div class="combo-card">
+    <h4>x20 números</h4>
+    <p>$20 (a $1 c/u)</p>
+    <a href="pago.html?combo=20" class="btn-comprar">Comprar</a>
+  </div>
+</div>
+
+<!-- Tarjeta especial -->
+<div class="extra-card">
+  <h4>¿Más números?</h4>
+  <p>Agrega la cantidad de números que desees.</p>
+  <div class="extra-input">
+  <input type="number" id="cantidad-numeros" min="20" max="200" placeholder="Ej: 25">
+  <button class="btn-comprar" onclick="redirigirCompra()">Comprar</button>
+</div>
+<p id="mensaje-error" style="color: red; margin-top: 10px; display: none;"></p>
+</div>
+
+<footer>
+  <p>&copy; 2025 Proyecto X. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const barra = document.querySelector(".barra-progreso");
+    let valorFinal = parseInt(barra.getAttribute("data-valor"));
+    let actual = 0;
+
+    // Limita el valor máximo a 100
+    if (valorFinal > 100) valorFinal = 100;
+
+    barra.style.width = "0%";
+    barra.textContent = "0%";
+
+    const animar = setInterval(() => {
+      if (actual >= valorFinal) {
+        clearInterval(animar);
+      } else {
+        actual++;
+        barra.style.width = actual + "%";
+        barra.textContent = actual + "%";
+
+        // Cambiar color según porcentaje
+        if (actual < 40) {
+          barra.style.backgroundColor = "#f44336"; // rojo
+        } else if (actual < 70) {
+          barra.style.backgroundColor = "#ffc107"; // amarillo
+        } else {
+          barra.style.backgroundColor = "#4caf50"; // verde
+        }
+      }
+    }, 20);
+  });
+</script>
+
+<script>
+  function redirigirCompra() {
+    const input = document.getElementById("cantidad-numeros");
+    const mensaje = document.getElementById("mensaje-error");
+    const valor = parseInt(input.value);
+
+    if (isNaN(valor) || valor < 20 || valor > 200) {
+      mensaje.textContent = "La cantidad debe ser entre 20 y 200.";
+      mensaje.style.display = "block";
+    } else {
+      mensaje.style.display = "none";
+      window.location.href = `pago.html?combo=${valor}`;
+    }
+  }
+</script>
+
+</body>
+</html>

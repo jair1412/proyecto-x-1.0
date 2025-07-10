@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Contacto - Proyecto X</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header>
+    <h1 class="titulo">Proyecto X</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="index.html">Proyectos</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section class="contacto">
+      <h2>Contáctanos</h2>
+
+      <form id="formulario-contacto">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correo" name="correo" required>
+
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+
+        <button type="submit">Enviar</button>
+      </form>
+
+      <div id="mensaje-exito" style="display: none; margin-top: 20px; color: green; font-weight: bold;">
+        ✅ Tu mensaje ha sido enviado. Gracias por contactarnos.
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Proyecto X. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- ✅ Script al final del body -->
+  <script>
+  const formulario = document.getElementById('formulario-contacto');
+  const mensaje = document.getElementById('mensaje-exito');
+
+  formulario.addEventListener('submit', function(evento) {
+    evento.preventDefault(); // Evita recargar la página
+
+    // Limpia el formulario
+    formulario.reset();
+
+    // Muestra el mensaje con animación de entrada
+    mensaje.style.display = 'block';
+    mensaje.classList.remove('animar-salida');
+    mensaje.classList.add('animar-entrada');
+
+    // Después de 4 segundos, ocultar el mensaje con animación de salida
+    setTimeout(() => {
+      mensaje.classList.remove('animar-entrada');
+      mensaje.classList.add('animar-salida');
+
+      // Espera a que termine la animación de salida y lo oculta
+      setTimeout(() => {
+        mensaje.style.display = 'none';
+        mensaje.classList.remove('animar-salida');
+      }, 600); // 600 ms = duración de slideOut
+    }, 4000); // espera 4 segundos antes de desaparecer
+  });
+</script>
+
+
+</body>
+</html>

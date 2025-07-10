@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Confirmación de Compra</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 30px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .cuadro {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 700px;
+    }
+
+    .fila-datos {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .titulo-cuadro {
+      font-weight: bold;
+      margin-bottom: 10px;
+      font-size: 1.1em;
+    }
+
+    .tabla {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .tabla th, .tabla td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .tabla th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>¡Gracias! Tu compra ha sido recibida.</h1>
+
+  <!-- Cuadro de resumen del pedido -->
+  <div class="cuadro" id="cuadro-resumen"></div>
+
+  <!-- Cuadro de instrucciones de pago -->
+  <div class="cuadro">
+    <div class="titulo-cuadro">Instrucciones de Pago:</div>
+    <p>1. Realiza una captura de pantalla al numero de pedido (en la parte superior izquierda).
+    <p>2. Transfiere o deposita EL MONTO TOTAL de la compra, tienes un tiempo máximo de 1 hora para enviar el comprobante y número de pedido A WHATSAPP o tu TU PEDIDO SE CANCELARÁ Y NO SE HARÁN REEMBOLSOS. Si ya realizaste el pago y aún no te respondemos, no te preocupes, tu pedido no se cancelará.</p>
+    <p>3. Envíanos el COMPROBANTE DE PAGO Y NÚMERO DE PEDIDO (esquina superior izquierda de esta pantalla) por WhatsApp al +593983714315 O NO SE GENERARÁN TUS NÚMEROS.</p>
+    <p>4. Recibirás tus números por correo electrónico una vez verificado el pago. (Recuerda, esto puede tardar en caso de transferencias interbancarias o en horas pico). </p>
+    <div class="titulo-cuadro">Números de cuenta:</div>
+    
+  </div>
+
+  <!-- Cuadro de detalles del pedido -->
+  <div class="cuadro" id="cuadro-detalles"></div>
+
+  <!-- Cuadro de dirección de facturación -->
+  <div class="cuadro" id="cuadro-facturacion"></div>
+
+  <!-- Cuadro de tus números -->
+  <div class="cuadro">
+    <div class="titulo-cuadro">Tus Números</div>
+    <p>Serán generados una vez que verificado el pago. Recuerda, esto puede tardar ya que la verificación de pago es manual. Por favor, sigue las instrucciones detalladas en el apartado "Instrucciones de pago".</p>
+  </div>
+
+  <script>
+    const datos = JSON.parse(localStorage.getItem("datosCompra")) || {};
+    if (datos.metodo === "transferencia") {
+  datos.metodo = "Transferencia/Depósito";
+}
+
+    const pedidoID = "PX" + Math.floor(100000 + Math.random() * 900000);
+    const fecha = new Date();
+    const fechaCompra = fecha.toLocaleDateString('es-ES', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      
+    });
+
+    // Cuadro resumen
+    document.getElementById("cuadro-resumen").innerHTML = `
+      <div class="titulo-cuadro">Resumen del Pedido</div>
+      <div class="fila-datos">
+        <span><strong>Nº Pedido:</strong> ${pedidoID}</span>
+        <span><strong>Fecha:</strong> ${fechaCompra}</span>
+      </div>
+      <div class="fila-datos">
+        <span><strong>Cliente:</strong> ${datos.nombre || ""} ${datos.apellido || ""}</span>
+        <span><strong>Total:</strong> $${datos.total || "0.00"}</span>
+      </div>
+      <div><strong>Método de Pago:</strong> ${datos.metodo || "-"}</div>
+    `;
+
+    // Cuadro detalles
+    document.getElementById("cuadro-detalles").innerHTML = `
+      <div class="titulo-cuadro">Detalles del Pedido</div>
+      <table class="tabla">
+        <tr><th>Producto</th><th>Total</th></tr>
+        <tr><td>Celular en sorteo (Combo ${datos.combo || "-"})</td><td>$${datos.total || "0.00"}</td></tr>
+        <tr><td>Subtotal</td><td>$${datos.total || "0.00"}</td></tr>
+        <tr><td>Método de pago</td><td>${datos.metodo || "-"}</td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>$${datos.total || "0.00"}</strong></td></tr>
+      </table>
+    `;
+
+    // Cuadro facturación
+    document.getElementById("cuadro-facturacion").innerHTML = `
+      <div class="titulo-cuadro">Dirección de Facturación</div>
+      <p><strong>Nombre:</strong> ${datos.nombre || ""} ${datos.apellido || ""}</p>
+      <p><strong>Correo:</strong> ${datos.correo || ""}</p>
+      <p><strong>Teléfono:</strong> ${datos.telefono || ""}</p>
+      <p><strong>Provincia:</strong> ${datos.provincia || ""}</p>
+      <p><strong>Ciudad:</strong> ${datos.ciudad || ""}</p>
+      <p><strong>Dirección:</strong> ${datos.direccion || ""}</p>
+    `;
+  </script>
+
+</body>
+</html>

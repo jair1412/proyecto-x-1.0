@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pago - Proyecto X</title>
+  <style>
+    /* Tu CSS original (reducido para ejemplo) */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #151515;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .titulo {
+      font-size: 2.5em;
+      font-weight: bold;
+      background: linear-gradient(to right, #1e90ff, #ff69b4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      display: inline-block; /* necesario para background-clip en algunos navegadores */
+      text-align: center;
+      margin: 0;
+      
+    }
+    .contenedor-pago {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 30px;
+      gap: 40px;
+      justify-content: center;
+    }
+    .formulario-pago {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+    }
+    .formulario-pago h2 {
+      margin-bottom: 20px;
+    }
+    .formulario-pago label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .formulario-pago input,
+    .formulario-pago select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .fila {
+      display: flex;
+      gap: 15px;
+    }
+    .fila .campo {
+      flex: 1;
+      margin-right: 10px;
+    }
+    .fila .campo:last-child {
+      margin-right: 0;
+    }
+    .resumen-compra {
+      flex: 1;
+      min-width: 280px;
+      max-width: 400px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      height: fit-content;
+    }
+    .resumen-compra h2 {
+      margin-top: 0;
+    }
+    .btn-comprar {
+      background-color: #333333;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      margin-top: 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+    }
+    .btn-comprar:hover {
+      background-color: #1f1f1f;
+    }
+    #terminos-wrapper {
+      margin-top: 20px;
+      display: none;
+    }
+    #mensaje-error {
+      display: none;
+      margin-top: 10px;
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 class="titulo">Proyecto X</h1>
+  </header>
+
+  <div class="contenedor-pago">
+
+    <!-- FORMULARIO DE DATOS PERSONALES CON EL BOTÓN -->
+    <div class="formulario-pago">
+      <h2>Datos Personales</h2>
+      <form id="form-datos">
+        <div class="fila">
+          <div class="campo">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" required />
+          </div>
+          <div class="campo">
+            <label for="apellido">Apellido</label>
+            <input type="text" id="apellido" name="apellido" required />
+          </div>
+        </div>
+
+        <label for="correo">Correo Electrónico</label>
+        <input type="email" id="correo" name="correo" required />
+
+        <label for="telefono">Teléfono</label>
+        <input type="tel" id="telefono" name="telefono" required />
+
+        <div class="fila">
+          <div class="campo">
+            <label for="pais">País</label>
+            <div style="padding: 10px 0 5px 0;"><strong>Ecuador</strong></div>
+          </div>
+          <div class="campo">
+            <label for="provincia">Provincia</label>
+            <select id="provincia" name="provincia" required>
+              <option value="" disabled selected>Selecciona una provincia</option>
+              <option>Azuay</option><option>Bolívar</option><option>Cañar</option><option>Carchi</option>
+              <option>Chimborazo</option><option>Cotopaxi</option><option>El Oro</option><option>Esmeraldas</option>
+              <option>Galápagos</option><option>Guayas</option><option>Imbabura</option><option>Loja</option>
+              <option>Los Ríos</option><option>Manabí</option><option>Morona Santiago</option><option>Napo</option>
+              <option>Orellana</option><option>Pastaza</option><option>Pichincha</option><option>Santa Elena</option>
+              <option>Santo Domingo</option><option>Sucumbíos</option><option>Tungurahua</option><option>Zamora Chinchipe</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="ciudad">Ciudad</label>
+            <input type="text" id="ciudad" name="ciudad" required />
+          </div>
+        </div>
+
+        <label for="direccion">Dirección</label>
+        <input type="text" id="direccion" name="direccion" required />
+
+        <!-- Aquí el botón -->
+        <button class="btn-comprar" id="btn-continuar" disabled>Continuar</button>
+      </form>
+    </div>
+
+    <!-- RESUMEN Y MÉTODOS DE PAGO -->
+    <div class="resumen-compra">
+      <h2>Detalle de tu compra</h2>
+      <p>Combo seleccionado: <strong><span id="combo">-</span> números</strong></p>
+      <p>Total a pagar: <strong>$<span id="total">0.00</span></strong></p>
+      <p><small>Recibirás tus números en el correo registrado una vez completado el pago.</small></p>
+
+      <hr style="margin: 20px 0;" />
+
+      <h3 style="margin-bottom: 10px;">Selecciona tu método de pago</h3>
+      <select id="metodo-pago" required style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc;">
+        <option value="" disabled selected>-- Selecciona una opción --</option>
+        <option value="transferencia">Transferencia bancaria o depósito</option>
+      </select>
+
+      <div id="terminos-wrapper">
+        <label class="terminos-label" style="display: flex; align-items: flex-start; gap: 10px;">
+          <input type="checkbox" id="aceptar-terminos" />
+          <span>
+            He leído y acepto los
+            <a href="#" id="toggle-terminos" style="text-decoration: underline; color: #1e90ff; cursor: pointer;">
+              términos y condiciones
+            </a>.
+          </span>
+        </label>
+
+        <div id="mensaje-error">
+          ⚠️ Debes aceptar los términos y condiciones para continuar.
+        </div>
+
+        <div id="contenido-terminos" style="display:none; margin-top: 15px; background-color: #f1f1f1; padding: 15px; border-radius: 6px; border: 1px solid #ccc; font-size: 0.9em;">
+          <strong>Términos y Condiciones:</strong>
+          <p>1. Una vez completado el pago, no se realizarán devoluciones.</p>
+          <p>2. Los números se asignan de manera aleatoria y serán enviados al correo registrado.</p>
+          <p>3. La participación implica aceptar que el sorteo será realizado según las reglas del sitio.</p>
+          <p>4. Proyecto X no se responsabiliza por errores en los datos proporcionados.</p>
+          <p>5. El sorteo se efectuará una vez se vendan todos los números disponibles.</p>
+        </div>
+      </div>
+
+      <div id="advertencia" style="display:none; margin-top: 20px; background-color: #fff3cd; color: #856404; padding: 15px; border: 1px solid #ffeeba; border-radius: 6px;">
+        ⚠️ <strong>Importante:</strong> Si no estás 100% seguro de realizar la compra, por favor no procedas.  
+        Una vez confirmado el pago, <strong>no hay reembolsos</strong> y se asignarán tus números automáticamente.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const combo = parseInt(new URLSearchParams(window.location.search).get("combo")) || 0;
+      document.getElementById("combo").textContent = combo;
+      document.getElementById("total").textContent = combo.toFixed(2);
+
+      const metodoPago = document.getElementById("metodo-pago");
+      const advertencia = document.getElementById("advertencia");
+      const terminosWrapper = document.getElementById("terminos-wrapper");
+      const aceptarTerminos = document.getElementById("aceptar-terminos");
+      const btnContinuar = document.getElementById("btn-continuar");
+      const toggleTerminos = document.getElementById("toggle-terminos");
+      const contenidoTerminos = document.getElementById("contenido-terminos");
+      const form = document.getElementById("form-datos");
+      const mensajeError = document.getElementById("mensaje-error");
+      const labelTerminos = document.querySelector(".terminos-label");
+
+      // Al cambiar método pago
+      metodoPago.addEventListener("change", () => {
+        if (metodoPago.value === "transferencia") {
+          advertencia.style.display = "block";
+          terminosWrapper.style.display = "block";
+          btnContinuar.disabled = !aceptarTerminos.checked;
+        } else {
+          advertencia.style.display = "none";
+          terminosWrapper.style.display = "none";
+          aceptarTerminos.checked = false;
+          contenidoTerminos.style.display = "none";
+          btnContinuar.disabled = true;
+          mensajeError.style.display = "none";
+        }
+      });
+
+      // Al marcar checkbox
+      aceptarTerminos.addEventListener("change", () => {
+        btnContinuar.disabled = !aceptarTerminos.checked;
+        if (aceptarTerminos.checked) {
+          mensajeError.style.display = "none";
+        }
+      });
+
+      // Mostrar términos
+      toggleTerminos.addEventListener("click", (e) => {
+        e.preventDefault();
+        contenidoTerminos.style.display = contenidoTerminos.style.display === "none" ? "block" : "none";
+      });
+
+      // Validación al enviar el form
+      form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  if (metodoPago.value === "transferencia" && !aceptarTerminos.checked) {
+    mensajeError.style.display = "block";
+    aceptarTerminos.scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
+
+  mensajeError.style.display = "none";
+
+  // Obtener datos del formulario
+  const datosFormulario = {
+    nombre: document.getElementById("nombre").value,
+    apellido: document.getElementById("apellido").value,
+    correo: document.getElementById("correo").value,
+    telefono: document.getElementById("telefono").value,
+    provincia: document.getElementById("provincia").value,
+    ciudad: document.getElementById("ciudad").value,
+    direccion: document.getElementById("direccion").value,
+    combo: document.getElementById("combo").textContent,
+    total: document.getElementById("total").textContent,
+    metodo: metodoPago.value
+  };
+
+  // Guardar en localStorage
+  localStorage.setItem("datosCompra", JSON.stringify(datosFormulario));
+
+  // Redirigir
+  window.location.href = "confirmacion.html";
+});
+
+    });
+
+    
+  </script>
+</body>
+</html>
