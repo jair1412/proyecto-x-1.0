@@ -66,6 +66,7 @@ footer {
   text-align: center;
   padding: 15px;
 }
+/* Sección de contacto */
 .contacto {
   padding: 40px 20px;
   background-color: #f0f0f0;
@@ -82,23 +83,26 @@ footer {
   margin: auto;
   display: flex;
   flex-direction: column;
+  gap: 15px;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 
 .contacto label {
   font-weight: bold;
-  margin-bottom: 5px;
   color: #333;
 }
 
 .contacto input,
 .contacto textarea {
   padding: 12px 15px;
-  margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 16px;
   font-family: inherit;
   transition: border-color 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .contacto input:focus,
@@ -122,6 +126,23 @@ footer {
 .contacto button:hover {
   background-color: #0b65c2;
 }
+
+/* Ajustes responsive */
+@media (max-width: 600px) {
+  .contacto h2 {
+    font-size: 24px;
+  }
+
+  .contacto form {
+    padding: 0 5px;
+  }
+
+  .contacto input,
+  .contacto textarea {
+    font-size: 15px;
+  }
+}
+
 /* Estilos base del mensaje */
 #mensaje-exito {
   display: none;
