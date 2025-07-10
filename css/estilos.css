@@ -128,6 +128,23 @@ footer {
   background-color: #0b65c2;
 }
 
+@media (max-width: 600px) {
+  .contacto form {
+    padding: 0 5px;
+  }
+
+  .contacto input,
+  .contacto textarea {
+    font-size: 18px;
+    padding: 14px 18px;
+  }
+
+  .contacto button {
+    font-size: 18px;
+    padding: 14px;
+  }
+}
+
 /* Estilos base del mensaje */
 #mensaje-exito {
   display: none;
