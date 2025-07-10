@@ -459,7 +459,7 @@ footer {
 
 /* Encabezado visible y bien proporcionado */
 header {
-  background-color: white;
+  background-color: 1a1a1a;
   padding: 20px 10px;
   text-align: center;
 }
@@ -489,7 +489,7 @@ nav ul li a {
   font-weight: bold;
   font-size: 1.2em;
   text-decoration: none;
-  color: #ffffff;
+  color: white;
 }
 
 /* Responsive: diseño vertical en móviles */
