@@ -484,109 +484,54 @@ nav ul li a {
   color: white;
 }
 
-/* Responsive: diseño vertical en móviles */
+/* Ajustes generales en móviles */
 @media (max-width: 600px) {
-  .titulo {
-    font-size: 2.2em;
+  html {
+    font-size: 16px;
+  }
+
+  body {
+    padding: 0;
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  header .titulo {
+    font-size: 2.2em !important;
   }
 
   nav ul {
     flex-direction: column;
-    gap: 0;
-  }
-
-  nav ul li a {
-    width: 100%;
-    text-align: center;
-    padding: 12px 0;
-    font-size: 1em;
-  }
-}
-
-/* Título de sección */
-.proyectos h2 {
-  text-align: center;
-  font-size: 2em;
-  margin-bottom: 30px;
-}
-
-/* Imagen del proyecto */
-.proyecto img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-/* Ajustes responsive */
-@media (max-width: 768px) {
-  .proyectos {
-    flex-direction: column;
-  }
-}
-
-/* Contenedor general de proyectos */
-.proyectos {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-/* Cada tarjeta de proyecto */
-.proyecto {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  padding: 20px;
-  flex: 1 1 280px;
-  max-width: 300px;
-  box-sizing: border-box;
-}
-
-/* Imagen dentro de tarjeta */
-.proyecto img {
-  width: 100%;
-  border-radius: 8px;
-  object-fit: cover;
-  margin-bottom: 10px;
-}
-
-/* Ajuste responsive */
-@media (max-width: 768px) {
-  .proyectos {
-    flex-direction: column;
     align-items: center;
   }
-}
-
-@media (max-width: 600px) {
-  .titulo {
-    font-size: 3em !important;
-  }
 
   nav ul li a {
-    font-size: 1.3em !important;
-    padding: 15px 0 !important;
+    padding: 12px 0;
+    font-size: 1.1em;
+  }
+
+  .contacto h2 {
+    font-size: 1.5em;
   }
 
   .contacto form {
-    max-width: 100% !important;
-    padding: 0 10px !important;
+    max-width: 100%;
+    padding: 0 15px;
   }
 
   .contacto input,
   .contacto textarea {
-    font-size: 20px !important;
-    padding: 16px 20px !important;
+    font-size: 1em;
+    padding: 14px;
   }
 
   .contacto button {
-    font-size: 20px !important;
-    padding: 16px !important;
+    font-size: 1em;
+    padding: 14px;
+  }
+
+  footer {
+    font-size: 0.9em;
+    padding: 10px;
   }
 }
