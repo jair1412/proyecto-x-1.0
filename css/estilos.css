@@ -484,15 +484,15 @@ nav ul li a {
   color: white;
 }
 
-/* Ajustes generales en móviles */
+/* --- Ajustes móviles para Contacto --- */
 @media (max-width: 600px) {
   html {
     font-size: 16px;
   }
 
   body {
-    padding: 0;
     margin: 0;
+    padding: 0;
     font-size: 1rem;
   }
 
@@ -500,38 +500,44 @@ nav ul li a {
     font-size: 2.2em !important;
   }
 
-  nav ul {
-    flex-direction: column;
-    align-items: center;
+  nav ul li a {
+    font-size: 1.1em !important;
+    padding: 12px 0 !important;
   }
 
-  nav ul li a {
-    padding: 12px 0;
-    font-size: 1.1em;
+  .contacto {
+    padding: 20px 10px !important;
   }
 
   .contacto h2 {
-    font-size: 1.5em;
+    font-size: 1.6em !important;
+    margin-bottom: 20px;
   }
 
+  /* Ajusta el formulario para que use casi todo el ancho disponible */
   .contacto form {
-    max-width: 100%;
-    padding: 0 15px;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 15px !important;
+  }
+
+  .contacto label {
+    font-size: 1em !important;
   }
 
   .contacto input,
   .contacto textarea {
-    font-size: 1em;
-    padding: 14px;
+    font-size: 1em !important;
+    padding: 14px !important;
   }
 
   .contacto button {
-    font-size: 1em;
-    padding: 14px;
+    font-size: 1em !important;
+    padding: 14px !important;
   }
 
   footer {
-    font-size: 0.9em;
-    padding: 10px;
+    font-size: 0.9em !important;
+    padding: 10px !important;
   }
 }
