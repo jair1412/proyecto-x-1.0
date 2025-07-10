@@ -70,6 +70,7 @@ footer {
 .contacto {
   padding: 40px 20px;
   background-color: #f0f0f0;
+  box-sizing: border-box;
 }
 
 .contacto h2 {
@@ -100,9 +101,9 @@ footer {
   border-radius: 8px;
   font-size: 16px;
   font-family: inherit;
-  transition: border-color 0.3s ease;
   width: 100%;
   box-sizing: border-box;
+  transition: border-color 0.3s ease;
 }
 
 .contacto input:focus,
@@ -125,22 +126,6 @@ footer {
 
 .contacto button:hover {
   background-color: #0b65c2;
-}
-
-/* Ajustes responsive */
-@media (max-width: 600px) {
-  .contacto h2 {
-    font-size: 24px;
-  }
-
-  .contacto form {
-    padding: 0 5px;
-  }
-
-  .contacto input,
-  .contacto textarea {
-    font-size: 15px;
-  }
 }
 
 /* Estilos base del mensaje */
