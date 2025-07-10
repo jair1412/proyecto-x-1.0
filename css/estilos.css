@@ -563,3 +563,30 @@ nav ul li a {
     align-items: center;
   }
 }
+
+@media (max-width: 600px) {
+  .titulo {
+    font-size: 3em !important;  /* Más grande el título */
+  }
+
+  nav ul li a {
+    font-size: 1.3em !important;  /* Links del menú más grandes */
+    padding: 15px 0 !important;
+  }
+
+  .contacto form {
+    max-width: 100% !important;  /* Que ocupe todo el ancho disponible */
+    padding: 0 10px !important;
+  }
+
+  .contacto input,
+  .contacto textarea {
+    font-size: 20px !important;
+    padding: 16px 20px !important;
+  }
+
+  .contacto button {
+    font-size: 20px !important;
+    padding: 16px !important;
+  }
+}
