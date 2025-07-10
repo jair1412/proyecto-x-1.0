@@ -471,7 +471,7 @@ header {
 
 /* Menú principal */
 nav {
-  background-color: #f2f2f2;
+  background-color: #1a1a1a;
 }
 
 nav ul {
@@ -489,7 +489,7 @@ nav ul li a {
   font-weight: bold;
   font-size: 1.2em;
   text-decoration: none;
-  color: #333;
+  color: #ffffff;
 }
 
 /* Responsive: diseño vertical en móviles */
