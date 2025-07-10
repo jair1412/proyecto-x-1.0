@@ -105,6 +105,44 @@
       color: red;
       font-weight: bold;
     }
+
+    @media (max-width: 600px) {
+  .contenedor-pago {
+    flex-direction: column;
+    padding: 20px 15px;
+    gap: 30px;
+  }
+
+  .formulario-pago,
+  .resumen-compra {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .fila {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .campo {
+    margin-right: 0 !important;
+    margin-bottom: 15px;
+  }
+
+  .formulario-pago input,
+  .formulario-pago select {
+    font-size: 16px;
+  }
+
+  .btn-comprar {
+    font-size: 16px;
+  }
+
+  #contenido-terminos {
+    font-size: 0.95em;
+  }
+}
+
   </style>
 </head>
 <body>
