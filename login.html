@@ -71,7 +71,7 @@
         return;
       }
 
-      fetch("https://backend-proyecto-x.onrender.com/", {  // <- Cambia esta URL por la de tu backend
+      fetch("https://backend-proyecto-x.onrender.com/login", {  // <- Cambia esta URL por la de tu backend
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ usuario, clave })
