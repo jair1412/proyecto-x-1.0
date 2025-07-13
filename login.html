@@ -6,89 +6,100 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      background: #f0f0f0;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
     }
-
-    #login-form {
+    .login-container {
       background: white;
-      padding: 20px;
+      padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      width: 300px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      width: 320px;
+      text-align: center;
     }
-
     input {
       width: 100%;
       padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 5px;
+      margin-top: 15px;
+      border-radius: 6px;
       border: 1px solid #ccc;
+      font-size: 16px;
     }
-
     button {
+      margin-top: 20px;
+      padding: 12px;
       width: 100%;
-      padding: 10px;
-      background-color: #1a1a1a;
-      color: white;
+      background-color: #1e90ff;
       border: none;
-      border-radius: 5px;
-      font-weight: bold;
+      color: white;
+      font-size: 16px;
       cursor: pointer;
+      border-radius: 6px;
     }
-
+    button:hover {
+      background-color: #0066cc;
+    }
     #mensaje {
-      margin-top: 10px;
+      margin-top: 15px;
       font-weight: bold;
-      text-align: center;
     }
   </style>
 </head>
 <body>
-  <form id="login-form">
-    <h2>Iniciar Sesión (Admin)</h2>
-    <input type="text" id="usuario" placeholder="Usuario" required />
-    <input type="password" id="clave" placeholder="Clave" required />
-    <button type="submit">Iniciar sesión</button>
+  <div class="login-container">
+    <h2>Inicio de sesión</h2>
+    <input type="text" id="usuario" placeholder="Usuario" />
+    <input type="password" id="clave" placeholder="Clave" />
+    <button id="btnLogin">Ingresar</button>
     <div id="mensaje"></div>
-  </form>
+  </div>
 
   <script>
-    const form = document.getElementById("login-form");
+    const btnLogin = document.getElementById("btnLogin");
     const mensaje = document.getElementById("mensaje");
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    btnLogin.addEventListener("click", () => {
+      const usuario = document.getElementById("usuario").value.trim();
+      const clave = document.getElementById("clave").value.trim();
 
-      const usuario = document.getElementById("usuario").value;
-      const clave = document.getElementById("clave").value;
+      if (!usuario || !clave) {
+        mensaje.textContent = "Por favor completa ambos campos.";
+        mensaje.style.color = "red";
+        return;
+      }
 
-      try {
-        const respuesta = await fetch("https://backend-proyecto-x-1.0.onrender.com", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ usuario, clave }),
-        });
-
-        const data = await respuesta.json();
-
-        if (respuesta.ok) {
+      fetch("https://backend-proyecto-x.onrender.com/", {  // <- Cambia esta URL por la de tu backend
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ usuario, clave })
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("Credenciales incorrectas");
+        return res.json();
+      })
+      .then(data => {
+        if (data.acceso) {
           mensaje.style.color = "green";
           mensaje.textContent = data.mensaje;
-          // Puedes redirigir a una página admin:
-          // window.location.href = "admin.html";
+          // Aquí puedes redirigir o mostrar contenido admin
+          // Por ejemplo:
+          if(data.tipo === "yo"){
+            window.location.href = "administrador.html"; // mi página admin personal
+          } else {
+            window.location.href = "admins.html"; // página para admins
+          }
         } else {
           mensaje.style.color = "red";
-          mensaje.textContent = data.mensaje;
+          mensaje.textContent = "Acceso denegado";
         }
-      } catch (error) {
+      })
+      .catch(error => {
         mensaje.style.color = "red";
-        mensaje.textContent = "Error al conectar con el servidor.";
-        console.error(error);
-      }
+        mensaje.textContent = error.message;
+      });
     });
   </script>
 </body>
