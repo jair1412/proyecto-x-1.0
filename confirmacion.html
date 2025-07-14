@@ -163,7 +163,10 @@
       <div class="titulo-cuadro">Detalles del Pedido</div>
       <table class="tabla">
         <tr><th>Producto</th><th>Total</th></tr>
-        <tr><td>Celular en sorteo (Combo ${datos.combo || "-"})</td><td>$${datos.total || "0.00"}</td></tr>
+        <tr>
+  <td>${localStorage.getItem("productoSeleccionado") || "Producto en sorteo"} (Combo ${datos.combo || "-"})</td>
+  <td>$${datos.total || "0.00"}</td>
+</tr>
         <tr><td>Subtotal</td><td>$${datos.total || "0.00"}</td></tr>
         <tr><td>Método de pago</td><td>${datos.metodo || "-"}</td></tr>
         <tr><td><strong>Total</strong></td><td><strong>$${datos.total || "0.00"}</strong></td></tr>
