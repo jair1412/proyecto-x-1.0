@@ -149,6 +149,15 @@
     }
   }
 </script>
+  
+<script>
+  function guardarProductoYRedirigir(combo) {
+    const producto = document.querySelector(".texto-centrado + p").textContent.trim();
+    localStorage.setItem("productoSeleccionado", producto);
+    localStorage.setItem("comboSeleccionado", combo);
+    window.location.href = `pago.html?combo=${combo}`;
+  }
+</script>
 
 </body>
 </html>
