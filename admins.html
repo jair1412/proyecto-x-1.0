@@ -135,7 +135,7 @@
       const res = await fetch(`${backendURL}/guardar-codigo`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ codigo, numeros: cantidad, correo })
+        body: JSON.stringify({ codigo, combo: cantidad, correo })
       });
 
       const data = await res.json();
