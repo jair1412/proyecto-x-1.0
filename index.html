@@ -99,36 +99,37 @@
 </footer>
 
 <script>
-  window.addEventListener("DOMContentLoaded", () => {
+  async function actualizarBarraProgreso() {
     const barra = document.querySelector(".barra-progreso");
-    let valorFinal = parseInt(barra.getAttribute("data-valor"));
-    let actual = 0;
 
-    // Limita el valor máximo a 100
-    if (valorFinal > 100) valorFinal = 100;
+    try {
+      const res = await fetch("https://backend-proyecto-x.onrender.com/progreso");
+      const data = await res.json();
 
-    barra.style.width = "0%";
-    barra.textContent = "0%";
+      const vendidos = data.totalNumeros || 0;
+      const total = 1000; // Del 000 al 999
+      const porcentaje = Math.min(100, Math.round((vendidos / total) * 100));
 
-    const animar = setInterval(() => {
-      if (actual >= valorFinal) {
-        clearInterval(animar);
+      barra.style.width = porcentaje + "%";
+      barra.textContent = porcentaje.toFixed(2) + "%";
+
+      // Colores según porcentaje
+      if (porcentaje < 40) {
+        barra.style.backgroundColor = "#f44336"; // rojo
+      } else if (porcentaje < 70) {
+        barra.style.backgroundColor = "#ffc107"; // amarillo
       } else {
-        actual++;
-        barra.style.width = actual + "%";
-        barra.textContent = actual + "%";
-
-        // Cambiar color según porcentaje
-        if (actual < 40) {
-          barra.style.backgroundColor = "#f44336"; // rojo
-        } else if (actual < 70) {
-          barra.style.backgroundColor = "#ffc107"; // amarillo
-        } else {
-          barra.style.backgroundColor = "#4caf50"; // verde
-        }
+        barra.style.backgroundColor = "#4caf50"; // verde
       }
-    }, 20);
-  });
+    } catch (err) {
+      console.error("Error cargando progreso:", err);
+      barra.textContent = "Error al cargar";
+      barra.style.backgroundColor = "#999";
+    }
+  }
+
+  // Ejecutar al cargar la página
+  window.addEventListener("DOMContentLoaded", actualizarBarraProgreso);
 </script>
 
 <script>
