@@ -97,8 +97,8 @@
 <footer>
   <p>&copy; 2025 Proyecto X. Todos los derechos reservados.</p>
 </footer>
-
-<script>
+  
+<script>       // barra porcentaje
   async function actualizarBarraProgreso() {
     const barra = document.querySelector(".barra-progreso");
 
@@ -107,28 +107,40 @@
       const data = await res.json();
 
       const vendidos = data.totalNumeros || 0;
-      const total = 1000; // Del 000 al 999
+      const total = 1000;
       const porcentaje = Math.min(100, Math.round((vendidos / total) * 100));
 
       barra.style.width = porcentaje + "%";
       barra.textContent = porcentaje.toFixed(2) + "%";
 
-      // Colores según porcentaje
+      // Estilo de color según avance
       if (porcentaje < 40) {
-        barra.style.backgroundColor = "#f44336"; // rojo
+        barra.style.backgroundColor = "#f44336";
       } else if (porcentaje < 70) {
-        barra.style.backgroundColor = "#ffc107"; // amarillo
+        barra.style.backgroundColor = "#ffc107";
+        barra.style.color = "#000";
       } else {
-        barra.style.backgroundColor = "#4caf50"; // verde
+        barra.style.backgroundColor = "#4caf50";
+        barra.style.color = "#fff";
       }
+
+      // Centrado dinámico
+      if (porcentaje === 0) {
+        barra.style.justifyContent = "center";
+        barra.style.paddingLeft = "0";
+        barra.textContent = "0.00%";
+      } else {
+        barra.style.justifyContent = "flex-start";
+        barra.style.paddingLeft = "10px";
+      }
+
     } catch (err) {
-      console.error("Error cargando progreso:", err);
-      barra.textContent = "Error al cargar";
+      console.error("Error al obtener progreso:", err);
+      barra.textContent = "Error";
       barra.style.backgroundColor = "#999";
     }
   }
 
-  // Ejecutar al cargar la página
   window.addEventListener("DOMContentLoaded", actualizarBarraProgreso);
 </script>
 
