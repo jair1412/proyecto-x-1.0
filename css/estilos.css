@@ -245,9 +245,8 @@ footer {
 .barra-progreso {
   height: 30px;
   color: white;
-  text-align: center;
-  line-height: 30px;
   font-weight: bold;
+  font-size: 16px;
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.2) 25%,
@@ -264,8 +263,12 @@ footer {
   border-radius: 10px;
   position: relative;
   overflow: hidden;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: width 0.3s ease;
 }
-
 
 @keyframes rayas-movimiento {
   0% {
