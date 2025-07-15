@@ -137,5 +137,11 @@
     });
   </script>
 
+  <script>
+  fetch("https://backend-proyecto-x.onrender.com")
+    .then(() => console.log("🟢 Backend conectado"))
+    .catch(() => console.warn("🔴 No se pudo conectar al backend"));
+</script>
+
 </body>
 </html>
