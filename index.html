@@ -31,7 +31,7 @@
     <h2 class="texto-centrado2">¡CANTIDADES LIMITADAS!</h2>
     <p class="texto-centrado3">¡Números Vendidos!</p>
     <div class="barra-contenedor">
-  <div class="barra-progreso" data-valor="70">0.00%</div>
+  <div class="barra-progreso">0.00%</div>
 </div>
 <p class="texto-centrado4">El dispositivo se jugará una vez vendida la totalidad de números, es decir, cuando la barra de progreso llegue al 100%.</p>
 <p class="texto-centrado4">Se hará tomando los 3 primeros dígitos de la suertuda nacional (programa de la lotería nacional).</p>
@@ -98,42 +98,61 @@
   <p>&copy; 2025 Proyecto X. Todos los derechos reservados.</p>
 </footer>
   
-<script>       // barra porcentaje
-  async function actualizarBarraProgreso() {
+<script>
+  async function animarBarraProgreso(valorFinal) {
     const barra = document.querySelector(".barra-progreso");
+    let actual = 0;
 
+    if (valorFinal > 100) valorFinal = 100;
+    if (valorFinal < 0) valorFinal = 0;
+
+    barra.style.width = "0%";
+    barra.textContent = "0.00%";
+    barra.style.justifyContent = "center";
+    barra.style.paddingLeft = "0";
+
+    const animar = setInterval(() => {
+      if (actual >= valorFinal) {
+        clearInterval(animar);
+      } else {
+        actual++;
+        barra.style.width = actual + "%";
+        barra.textContent = actual.toFixed(2) + "%";
+
+        if (actual < 40) {
+          barra.style.backgroundColor = "#f44336";
+          barra.style.color = "#fff";
+        } else if (actual < 70) {
+          barra.style.backgroundColor = "#ffc107";
+          barra.style.color = "#000";
+        } else {
+          barra.style.backgroundColor = "#4caf50";
+          barra.style.color = "#fff";
+        }
+
+        // Centrado solo al inicio
+        if (actual === 0) {
+          barra.style.justifyContent = "center";
+          barra.style.paddingLeft = "0";
+        } else {
+          barra.style.justifyContent = "flex-start";
+          barra.style.paddingLeft = "10px";
+        }
+      }
+    }, 20);
+  }
+
+  async function obtenerYAnimarBarra() {
+    const barra = document.querySelector(".barra-progreso");
     try {
       const res = await fetch("https://backend-proyecto-x.onrender.com/progreso");
       const data = await res.json();
 
       const vendidos = data.totalNumeros || 0;
       const total = 1000;
-      const porcentaje = Math.min(100, Math.round((vendidos / total) * 100));
+      const porcentaje = Math.round((vendidos / total) * 100);
 
-      barra.style.width = porcentaje + "%";
-      barra.textContent = porcentaje.toFixed(2) + "%";
-
-      // Estilo de color según avance
-      if (porcentaje < 40) {
-        barra.style.backgroundColor = "#f44336";
-      } else if (porcentaje < 70) {
-        barra.style.backgroundColor = "#ffc107";
-        barra.style.color = "#000";
-      } else {
-        barra.style.backgroundColor = "#4caf50";
-        barra.style.color = "#fff";
-      }
-
-      // Centrado dinámico
-      if (porcentaje === 0) {
-        barra.style.justifyContent = "center";
-        barra.style.paddingLeft = "0";
-        barra.textContent = "0.00%";
-      } else {
-        barra.style.justifyContent = "flex-start";
-        barra.style.paddingLeft = "10px";
-      }
-
+      animarBarraProgreso(porcentaje);
     } catch (err) {
       console.error("Error al obtener progreso:", err);
       barra.textContent = "Error";
@@ -141,8 +160,9 @@
     }
   }
 
-  window.addEventListener("DOMContentLoaded", actualizarBarraProgreso);
+  window.addEventListener("DOMContentLoaded", obtenerYAnimarBarra);
 </script>
+
 
 <script>
   function redirigirCompra() {
