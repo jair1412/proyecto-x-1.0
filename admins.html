@@ -139,7 +139,16 @@
       });
 
       const data = await res.json();
-      document.getElementById("respuesta").textContent = data.mensaje || "Código guardado correctamente";
+      
+      if (data.numeros) {
+  document.getElementById("respuesta").innerHTML = `
+    ${data.mensaje}<br>
+    <strong>Números generados:</strong> ${data.numeros.join(", ")}
+  `;
+} else {
+  document.getElementById("respuesta").textContent = data.mensaje || "Código guardado correctamente";
+}
+
     } catch (err) {
       document.getElementById("respuesta").textContent = "Error al guardar el código";
     }
