@@ -156,6 +156,10 @@
   <span><strong>Nº Pedido:</strong> <span style="color: red;">${pedidoID}</span></span>
   <span><strong>Fecha:</strong> ${fechaCompra}</span>
 </div>
+    <div class="fila-datos">
+  <span><strong>Combo seleccionado:</strong> ${datos.combo || "-"}</span>
+</div>
+
       <div class="fila-datos">
         <span><strong>Cliente:</strong> ${datos.nombre || ""} ${datos.apellido || ""}</span>
         <span><strong>Total:</strong> $${datos.total || "0.00"}</span>
