@@ -62,19 +62,31 @@
   <h1>Gestión de Códigos</h1>
 
   <!-- Formulario para guardar -->
-  <form id="form-guardar">
-    <h2>Guardar código</h2>
-    <label for="codigoGuardar">Código:</label>
-    <input type="text" id="codigoGuardar" required>
+<form id="form-guardar">
+  <h2>Guardar código</h2>
+  <label for="codigoGuardar">Código:</label>
+  <input type="text" id="codigoGuardar" required>
 
-    <label for="numerosGuardar">Números (ej: 5, 12, 27):</label>
-    <input type="text" id="numerosGuardar" required>
+  <label for="combo">Combo seleccionado:</label>
+  <select id="combo" onchange="mostrarInputExtra()">
+    <option value="3">Combo 3</option>
+    <option value="5">Combo 5</option>
+    <option value="10">Combo 10</option>
+    <option value="15">Combo 15</option>
+    <option value="20">Combo 20</option>
+    <option value="otro">Más números</option>
+  </select>
 
-    <label for="correoGuardar">Correo:</label>
-    <input type="email" id="correoGuardar" required>
+  <div id="combo-extra" style="display: none;">
+    <label for="cantidadExtra">Cantidad (mayor a 20):</label>
+    <input type="number" id="cantidadExtra" min="21" placeholder="Ej: 25">
+  </div>
 
-    <button type="submit">Guardar Código</button>
-  </form>
+  <label for="correoGuardar">Correo:</label>
+  <input type="email" id="correoGuardar" required>
+
+  <button type="submit">Guardar Código</button>
+</form>
 
   <!-- Formulario para confirmar -->
   <form id="form-confirmar">
@@ -87,32 +99,51 @@
 
   <div class="respuesta" id="respuesta"></div>
 
-  <script>
-    const backendURL = "https://backend-proyecto-x.onrender.com"; // 🔁 Cambia si tu backend tiene otra URL
+ <script>
+  const backendURL = "https://backend-proyecto-x.onrender.com";
 
-    // Guardar código
-    document.getElementById("form-guardar").addEventListener("submit", async function(e) {
-      e.preventDefault();
+  function mostrarInputExtra() {
+    const combo = document.getElementById("combo").value;
+    const extra = document.getElementById("combo-extra");
+    extra.style.display = combo === "otro" ? "block" : "none";
+  }
 
-      const codigo = document.getElementById("codigoGuardar").value;
-      const numeros = document.getElementById("numerosGuardar").value.split(",").map(n => parseInt(n.trim()));
-      const correo = document.getElementById("correoGuardar").value;
-
-      try {
-        const res = await fetch(`${backendURL}/guardar-codigo`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ codigo, numeros, correo })
-        });
-
-        const data = await res.json();
-        document.getElementById("respuesta").textContent = data.mensaje || "Código guardado correctamente";
-      } catch (err) {
-        document.getElementById("respuesta").textContent = "Error al guardar el código";
+  function obtenerCantidadSeleccionada() {
+    const combo = document.getElementById("combo").value;
+    if (combo === "otro") {
+      const extra = parseInt(document.getElementById("cantidadExtra").value);
+      if (isNaN(extra) || extra <= 20) {
+        alert("Debes ingresar una cantidad válida mayor a 20");
+        return null;
       }
-    });
+      return extra;
+    }
+    return parseInt(combo);
+  }
+
+  // Guardar código
+  document.getElementById("form-guardar").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const codigo = document.getElementById("codigoGuardar").value;
+    const cantidad = obtenerCantidadSeleccionada();
+    const correo = document.getElementById("correoGuardar").value;
+
+    if (cantidad === null) return;
+
+    try {
+      const res = await fetch(`${backendURL}/guardar-codigo`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ codigo, numeros: cantidad, correo })
+      });
+
+      const data = await res.json();
+      document.getElementById("respuesta").textContent = data.mensaje || "Código guardado correctamente";
+    } catch (err) {
+      document.getElementById("respuesta").textContent = "Error al guardar el código";
+    }
+  });
 
     // Confirmar código
     document.getElementById("form-confirmar").addEventListener("submit", async function(e) {
@@ -141,6 +172,37 @@
   fetch("https://backend-proyecto-x.onrender.com")
     .then(() => console.log("🟢 Backend conectado"))
     .catch(() => console.warn("🔴 No se pudo conectar al backend"));
+</script>
+
+  <script>
+  function mostrarInputExtra() {
+    const combo = document.getElementById("combo").value;
+    const extra = document.getElementById("combo-extra");
+
+    if (combo === "otro") {
+      extra.style.display = "block";
+    } else {
+      extra.style.display = "none";
+    }
+  }
+
+  function obtenerCantidadSeleccionada() {
+    const combo = document.getElementById("combo").value;
+    if (combo === "otro") {
+      const extra = parseInt(document.getElementById("cantidadExtra").value);
+      if (isNaN(extra) || extra <= 20) {
+        alert("Debes ingresar una cantidad válida mayor a 20");
+        return null;
+      }
+      return extra;
+    }
+    return parseInt(combo);
+  }
+
+  // Este es el valor que debes usar en tu lógica al generar los números
+  // Ejemplo:
+  // const cantidad = obtenerCantidadSeleccionada();
+  // if (cantidad !== null) { ... }
 </script>
 
 </body>
